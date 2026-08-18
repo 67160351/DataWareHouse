@@ -1,0 +1,5 @@
+log_id,batch_name,started_at,ended_at,rows_read,rows_loaded,rows_rejected,status
+1,orders_batch_1,2026-08-18 08:51:58.032853,2026-08-18 08:51:58.136014,420,373,47,success
+2,orders_batch_1,2026-08-18 08:51:58.144186,2026-08-18 08:51:58.172069,0,0,0,failed
+3,orders_batch_2,2026-08-18 08:51:58.183345,2026-08-18 08:51:58.212102,0,0,0,failed
+4,orders_batch_3,2026-08-18 08:51:58.223060,2026-08-18 08:51:58.256361,0,0,0,failed
