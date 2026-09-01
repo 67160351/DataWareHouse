@@ -1,0 +1,14 @@
+stage,issue,rows_affected,action
+5.2 combine,รวม orders ม.ค.+ก.พ. หลัง schema alignment,752,concat(ignore_index=True) สำเร็จ
+5.3 cleaning,unit_price เป็นค่าว่าง,2,คัดออก (ไม่สามารถคำนวณ net_sales ได้โดยไม่เดาราคา)
+5.3 cleaning,order_id ซ้ำ (มากกว่า 1 แถวต่อคำสั่งซื้อ),2,เก็บเฉพาะแถวล่าสุดตามลำดับที่ปรากฏ (keep='last') ตามกติกาข้อ 1
+5.3 business rule,quantity <= 0 (ค่าผิดปกติ เช่น -1),2,คัดออกจาก fact table ตามกติกาข้อ 2
+5.3 customers cleaning,email เป็นค่าว่าง,5,คงแถวไว้ (ไม่กระทบ key การ merge) แต่บันทึกไว้ใน DQ report
+5.3 customers cleaning,ชื่อจังหวัดสะกด/ภาษาไม่ตรงกัน (14 รูปแบบ),163,map ให้เป็นชื่อมาตรฐานเดียว เหลือ 6 จังหวัด
+5.3 customers cleaning,customer_id ซ้ำใน customers_crm,3,เก็บแถวแรกต่อ customer_id (keep='first')
+5.3 products info,สินค้าที่ active_flag = N (เลิกขาย),3,คงไว้ใน dim_product (เพื่อ reference คำสั่งซื้อในอดีต) แต่ทำเครื่องหมายไว้
+5.3 payments cleaning,payment event ซ้ำทุกคอลัมน์,1,ลบซ้ำ (drop_duplicates ทั้งแถว)
+5.4 integration,customer_id ไม่พบใน customers_crm (master),22,คัดออกจาก fact_sales ตามกติกาข้อ 3 (ลูกค้าต้องพบใน Master Data)
+5.4 integration,product_id ไม่พบใน product_master (master),2,คัดออกจาก fact_sales ตามกติกาข้อ 3 (สินค้าต้องพบใน Master Data)
+5.4 integration,payment event ที่ order_id ไม่พบใน orders ที่ผ่านการตรวจสอบ (orphan payment),5,ไม่ถูกใช้ในการคำนวณยอดขาย (ไม่มีคำสั่งซื้อรองรับ)
+5.4 business rule,payment_status ไม่ใช่ PAID (FAILED / REFUNDED / ไม่มี payment),63,ไม่นับเป็นยอดขายสุทธิ ตามกติกาข้อ 4

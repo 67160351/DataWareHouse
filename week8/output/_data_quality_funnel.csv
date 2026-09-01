@@ -1,0 +1,6 @@
+stage,rows
+1. Raw (concat),752
+2. Deduplicated,748
+3. Business-rule valid,746
+4. Matched to Master (customer & product),722
+5. Paid sales (fact_sales),660

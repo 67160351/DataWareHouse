@@ -1,0 +1,10 @@
+metric,value
+orders รวมหลัง concat (ก่อนลบ duplicate),752.0
+orders หลังลบ duplicate order_id,748.0
+orders ผ่านกติกาทางธุรกิจ (qty/price/discount),746.0
+orders ที่ customer_id ไม่พบใน master,22.0
+orders ที่ product_id ไม่พบใน master,2.0
+payment events ไม่ใช่ PAID,63.0
+ธุรกรรมยอดขายสุทธิที่ใช้ได้จริง (PAID),660.0
+ยอดขายสุทธิรวม (บาท),10224044.08
+จำนวนจังหวัดมาตรฐาน (unique),6.0

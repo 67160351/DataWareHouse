@@ -1,0 +1,6 @@
+dataset,rows,duplicate_rows,duplicate_order_id,missing_values_total
+orders_2026_01,361,1,1,1
+orders_2026_02,391,1,1,1
+customers_crm,163,0,3,5
+product_master,40,0,0,0
+payments,752,1,1,0
