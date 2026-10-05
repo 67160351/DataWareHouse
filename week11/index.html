@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2HandToYou — Business Storytelling Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#182230;--muted:#667085;--line:#e7eaf0;--accent:#6d5dfc;--accent2:#18a999;--warn:#f59e0b;--danger:#e25555;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:var(--ink)}
+.wrap{max-width:1400px;margin:auto;padding:28px} .hero{background:linear-gradient(135deg,#1e2340,#5147a8);color:white;border-radius:24px;padding:34px 38px;margin-bottom:20px;box-shadow:0 16px 40px rgba(38,34,90,.18)}
+.kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.75} h1{font-size:38px;margin:8px 0 8px} .hero p{max-width:900px;line-height:1.6;opacity:.9;margin:0}
+.story{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0} .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(16,24,40,.04)} .kpi .num{font-size:30px;font-weight:800;margin-top:6px} .label{font-size:13px;color:var(--muted)} .delta{font-size:12px;margin-top:7px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-top:18px} .full{grid-column:1/-1} h2{margin:0 0 6px;font-size:21px} .sub{color:var(--muted);font-size:13px;margin-bottom:16px} canvas{max-height:340px}
+.storyline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px} .storybox{padding:18px;border-radius:16px;background:#fafafa;border:1px solid var(--line)} .storybox b{display:block;font-size:16px;margin-bottom:8px} .tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#efefff;color:#5549c8;font-size:12px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left} th{color:var(--muted);font-weight:600}
+.note{background:#fff8e8;border:1px solid #f4d99a;color:#72510a;padding:14px 16px;border-radius:14px;line-height:1.5;font-size:13px} .footer{color:var(--muted);font-size:12px;margin:20px 2px 40px;line-height:1.6}
+@media(max-width:900px){.story,.grid,.storyline{grid-template-columns:1fr 1fr}} @media(max-width:600px){.story,.grid,.storyline{grid-template-columns:1fr} h1{font-size:30px} .wrap{padding:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<div class="kicker">Business Idea Creation • 2HandToYou</div>
+<h1>ทำไม Marketplace มือสองต้องมี AI?</h1>
+<p>2HandToYou แก้ 2 ปัญหาธุรกิจที่เกิดพร้อมกัน: <b>ความน่าเชื่อถือ</b>ของประกาศสินค้า และ <b>ความยากในการค้นหา</b>สิ่งที่ตรงความสนใจ โดยใช้ AI ตรวจภาพซ้ำ/ภาพที่น่าสงสัย และ AI Recommendation ช่วยค้นหาสินค้าที่เกี่ยวข้อง</p>
+</section>
+
+<div class="story">
+<div class="card kpi"><div class="label">Test data สำหรับ Duplicate</div><div class="num">20,000</div><div class="delta">Training records</div></div>
+<div class="card kpi"><div class="label">Recommendation dataset</div><div class="num">10,000</div><div class="delta">Recommendation records</div></div>
+<div class="card kpi"><div class="label">Duplicate Phase 1</div><div class="num">100.0%</div><div class="delta">Controlled accuracy</div></div>
+<div class="card kpi"><div class="label">Recommendation CTR</div><div class="num">27.6%</div><div class="delta">5,000 feedback events</div></div>
+</div>
+
+<div class="note"><b>Data honesty:</b> ตัวเลขจาก dataset เป็นข้อมูลสำหรับการพัฒนา/ทดสอบโมเดล (รวม synthetic/mock data) ไม่ใช่ยอดขายจริงของ 2HandToYou ส่วน 90% Duplicate / 80% Recommendation เป็น progress ที่ระบุใน project report</div>
+
+<div class="grid">
+<section class="card">
+<h2>1. ปัญหาความน่าเชื่อถือ → AI ช่วยคัดกรอง</h2>
+<div class="sub">Training dataset แบ่งเป็นหลายสถานการณ์เพื่อทดสอบ Duplicate / Unique / Review / Spam</div>
+<canvas id="dupScenario"></canvas>
+</section>
+<section class="card">
+<h2>2. ผลการทดสอบ Duplicate</h2>
+<div class="sub">Phase 1 controlled evaluation จาก evaluation report</div>
+<canvas id="dupPerf"></canvas>
+</section>
+
+<section class="card">
+<h2>3. AI Recommendation → ลดเวลาหาของที่ใช่</h2>
+<div class="sub">Recommendation feedback funnel จาก 5,000 events</div>
+<canvas id="funnel"></canvas>
+</section>
+<section class="card">
+<h2>4. ผู้ใช้มีความหลากหลาย</h2>
+<div class="sub">Buyer profile dataset: 1,000 buyer profiles</div>
+<canvas id="age"></canvas>
+</section>
+
+<section class="card full">
+<h2>5. Recommendation Quality</h2>
+<div class="sub">ค่า Expected ใน acceptance criteria ของชุด recommendation dataset — ทุก metric หลักในตารางผ่าน Minimum</div>
+<table>
+<thead><tr><th>Metric</th><th>Target</th><th>Minimum</th><th>Expected</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Precision@5</td><td>80%</td><td>70%</td><td><b>82%</b></td><td>✓ Pass</td></tr><tr><td>Precision@10</td><td>75%</td><td>65%</td><td><b>77%</b></td><td>✓ Pass</td></tr><tr><td>Recall@5</td><td>60%</td><td>50%</td><td><b>63%</b></td><td>✓ Pass</td></tr><tr><td>Recall@10</td><td>70%</td><td>60%</td><td><b>72%</b></td><td>✓ Pass</td></tr><tr><td>MAP</td><td>65%</td><td>55%</td><td><b>68%</b></td><td>✓ Pass</td></tr><tr><td>MRR</td><td>70%</td><td>60%</td><td><b>73%</b></td><td>✓ Pass</td></tr><tr><td>NDCG</td><td>75%</td><td>65%</td><td><b>78%</b></td><td>✓ Pass</td></tr><tr><td>Hit Rate</td><td>80%</td><td>70%</td><td><b>83%</b></td><td>✓ Pass</td></tr><tr><td>CTR</td><td>20%</td><td>12%</td><td><b>22%</b></td><td>✓ Pass</td></tr><tr><td>Conversion Rate</td><td>8%</td><td>4%</td><td><b>9%</b></td><td>✓ Pass</td></tr><tr><td>Coverage</td><td>90%</td><td>80%</td><td><b>92%</b></td><td>✓ Pass</td></tr><tr><td>Novelty</td><td>50%</td><td>35%</td><td><b>55%</b></td><td>✓ Pass</td></tr><tr><td>Diversity</td><td>60%</td><td>45%</td><td><b>62%</b></td><td>✓ Pass</td></tr><tr><td>Serendipity</td><td>30%</td><td>15%</td><td><b>33%</b></td><td>✓ Pass</td></tr><tr><td>Confidence</td><td>85%</td><td>70%</td><td><b>87%</b></td><td>✓ Pass</td></tr><tr><td>Known Limitations</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Buyer, product, and interaction data are synthetically generated for AI/QA purposes and do not represent real marketplace users.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Recommendation_Score and Confidence_Score are derived from a simplified weighted-blend formula for dataset purposes, not the production ranking model.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Text noise (typos, slang, mixed language) approximates real-world input but is not exhaustive of all Thai dialectal variation.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>Future Improvements</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Integrate real (anonymized/aggregated) behavioral logs once available, subject to PDPA review.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Expand rare/edge scenario coverage with adversarial and spam-seller patterns.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr><tr><td>- Add multi-session sequential behavior (session chains) for sequence-aware recommendation models.</td><td>nan%</td><td>nan%</td><td><b>nan%</b></td><td>✓ None</td></tr>
+</tbody></table>
+</section>
+
+<section class="card full">
+<h2>6. Business Story — จากปัญหา → AI → ผลลัพธ์ → โอกาสทางธุรกิจ</h2>
+<div class="storyline">
+<div class="storybox"><b>Trust</b>ภาพสินค้าซ้ำและประกาศที่ไม่น่าเชื่อถือเพิ่มต้นทุนการตรวจสอบและลดความไว้วางใจ<span class="tag">Duplicate / Spam Detection</span></div>
+<div class="storybox"><b>Discovery</b>เมื่อสินค้าเยอะขึ้น ผู้ซื้อใช้เวลาค้นหานานขึ้น ระบบ Recommendation จึงช่วยเสนอสิ่งที่เกี่ยวข้อง<span class="tag">Personalized Discovery</span></div>
+<div class="storybox"><b>Business</b>เมื่อ platform น่าเชื่อถือและค้นหาง่ายขึ้น มีฐานรองรับการสร้าง transaction fee และพื้นที่โปรโมตสินค้าในอนาคต<span class="tag">Revenue Opportunity</span></div>
+</div>
+</section>
+
+<section class="card full">
+<h2>7. ทีม 2HandToYou</h2>
+<table><thead><tr><th>Role</th><th>Name</th></tr></thead><tbody><tr><td>Leader</td><td>พีรพัฒน์ บุญแสน</td></tr><tr><td>Tech Leader</td><td>นพรัตน์ โพธิ์สาวัง</td></tr><tr><td>Tech</td><td>นภัสดล หงษาวดี</td></tr><tr><td>Tech</td><td>กิตติทัศน์ แก้วใส</td></tr><tr><td>Support Leader</td><td>ธมนวรรณ ศรีสวัสดิ์</td></tr><tr><td>Support</td><td>วิศวรุต พุกพะยา</td></tr><tr><td>Support</td><td>มงคลชัย ช่วงโชติ</td></tr><tr><td>QA Leader</td><td>ธนกฤต มะโน</td></tr><tr><td>QA</td><td>ปัญญาสิริ อาจศัตรู</td></tr><tr><td>QA</td><td>ธันยา สมบัติ</td></tr></tbody></table>
+</section>
+</div>
+
+<div class="footer">
+<b>Sources:</b> 2HandToYou-Sec3.pdf; dataset-ai-ตรวจสอบรูปภาพซ้ำ.xlsx; evaluation/report.json; Recommendation source_recommendation.xlsx.<br>
+External context: Statista ReCommerce Thailand และ Kaidee public marketplace context. Dashboard นี้ใช้ข้อมูลโครงการเป็นแกนหลัก และใช้ข้อมูลภายนอกเฉพาะเพื่ออธิบายบริบทตลาด
+</div>
+</div>
+
+<script>
+const common={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+new Chart(document.getElementById('dupScenario'),{type:'bar',data:{labels:["NORMAL", "EXACT_DUPLICATE", "NEAR_DUPLICATE", "SAME_PRODUCT", "DIFFERENT_PRODUCT", "ROTATED", "RESIZED", "CROPPED", "WATERMARK", "SCREENSHOT", "AI_IMAGE", "STOCK_IMAGE", "SPAM", "MIRRORED", "NEGATIVE", "BOUNDARY"],datasets:[{data:[5600, 3000, 2600, 1200, 1200, 1000, 1000, 1000, 600, 600, 600, 400, 400, 400, 200, 200],borderRadius:7}]},options:{...common,scales:{y:{beginAtZero:true}}}});
+new Chart(document.getElementById('dupPerf'),{type:'bar',data:{labels:["NORMAL", "EXACT_DUPLICATE", "NEAR_DUPLICATE", "DIFFERENT_PRODUCT", "SAME_PRODUCT", "RESIZED", "ROTATED", "CROPPED", "SCREENSHOT", "WATERMARK", "AI_IMAGE", "MIRRORED", "SPAM", "STOCK_IMAGE", "NEGATIVE", "BOUNDARY"],datasets:[{data:[100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],borderRadius:7}]},options:{...common,indexAxis:'y',scales:{x:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}});
+new Chart(document.getElementById('funnel'),{type:'bar',data:{labels:['Recommended','Viewed','Clicked','Purchased','Hidden'],datasets:[{data:[5000,2744,1380,347,225],borderRadius:7}]},options:{...common,scales:{y:{beginAtZero:true}}}});
+new Chart(document.getElementById('age'),{type:'doughnut',data:{labels:["65+", "45-54", "55-64", "13-17", "35-44", "18-24", "25-34"],datasets:[{data:[158, 154, 152, 144, 140, 127, 125]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});
+</script>
+</body></html>

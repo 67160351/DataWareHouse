@@ -1,0 +1,6 @@
+2HandToYou Dashboard Submission Checklist
+[ ] index.html
+[ ] 2HandToYou_Dashboard_Data.xlsx
+[ ] README.md
+[ ] Push folder to GitHub repository
+[ ] Submit repository URL
